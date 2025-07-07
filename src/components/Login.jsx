@@ -6,6 +6,7 @@ import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser, removeUser } from '../utils/userSlice';
+import { USER_AVATAR } from '../utils/constants';
 
 const Login = () => {
     const [signup, setSignUp] = useState(false);
@@ -29,33 +30,32 @@ const Login = () => {
         if (signup) {
             createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
                 .then((userCredential) => {
-                    // Signed up 
-                    const user = userCredential.user;
-                    // user.displayName = fullName.current.value;
-                    // user.photoURL = 'https://avatars.githubusercontent.com/u/181729549?v=4';
-                    const {email, displayName, photoURL} = user;
-                    dispatch(addUser({email: email, displayName: displayName, photoURL: 'https://avatars.githubusercontent.com/u/181729549?v=4'}));
-                    navigate('/browse')
-                    // ...
+                    const user = auth.currentUser;
+                    if (user !== null) {
+                        const displayName = user.displayName;
+                        const email = user.email;
+                        const photoURL = USER_AVATAR;
+                        const uid = user.uid;
+                        dispatch(addUser({uid: uid, email: email, displayName: displayName, photoURL: photoURL}))
+                    }
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
                     setErrorMessage(errorCode, ": ", errorMessage);
-                    // ..
                 });
         } else {
 
             signInWithEmailAndPassword(auth, email.current.value, password.current.value)
                 .then((userCredential) => {
-                    // Signed in 
-                    const user = userCredential.user;
-                    // user.displayName = fullName.current.value;
-                    // user.photoURL = 'https://avatars.githubusercontent.com/u/181729549?v=4';
-                    const {email, displayName, photoURL} = user;
-                    dispatch(addUser({email: email, displayName: displayName, photoURL: 'https://avatars.githubusercontent.com/u/181729549?v=4'}));
-                    navigate('/browse')
-                    // ...
+                      const user = auth.currentUser;
+                    if (user !== null) {
+                        const displayName = user.displayName;
+                        const email = user.email;
+                        const photoURL = USER_AVATAR;
+                        const uid = user.uid;
+                        dispatch(addUser({uid: uid, email: email, displayName: displayName, photoURL: photoURL}))
+                    }
                 })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -66,32 +66,6 @@ const Login = () => {
         }
 
     }
-
-    // useEffect(() => {
-
-    //     // signOut(auth).then(() => {
-    //     //     // dispatch(removeUser());
-    //     //     // Sign-out successful.
-    //     // }).catch((error) => {
-    //     //     // An error happened.
-    //     //     console.log(error)
-    //     // });
-
-    //     onAuthStateChanged(auth, (user) => {
-    //         console.log(user)
-    //         if (user) {
-    //             // User is signed in, see docs for a list of available properties
-    //             // https://firebase.google.com/docs/reference/js/auth.user
-    //             const { uid, email, displayName } = user;
-    //             dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
-    //             // ...
-    //         } else {
-    //             dispatch(removeUser());
-    //             // User is signed out
-    //             // ...
-    //         }
-    //     });
-    // }, [])
 
     return <div>
         <Header />
