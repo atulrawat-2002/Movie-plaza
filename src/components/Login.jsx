@@ -1,20 +1,27 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { validateData } from '../utils/validation';
 import Header from './Header';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from '../utils/firebase';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addUser, removeUser } from '../utils/userSlice';
 
 const Login = () => {
     const [signup, setSignUp] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
     const email = useRef(null)
     const password = useRef(null)
+    const fullName = useRef(null)
+    const navigate = useNavigate()
+    const dispatch = useDispatch();
+
 
     const toggleSignUp = () => {
         setSignUp(!signup)
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const message = validateData(email.current.value, password.current.value)
         setErrorMessage(message)
         if (message) return;
@@ -24,7 +31,11 @@ const Login = () => {
                 .then((userCredential) => {
                     // Signed up 
                     const user = userCredential.user;
-                    console.log(userCredential);
+                    // user.displayName = fullName.current.value;
+                    // user.photoURL = 'https://avatars.githubusercontent.com/u/181729549?v=4';
+                    const {email, displayName, photoURL} = user;
+                    dispatch(addUser({email: email, displayName: displayName, photoURL: 'https://avatars.githubusercontent.com/u/181729549?v=4'}));
+                    navigate('/browse')
                     // ...
                 })
                 .catch((error) => {
@@ -39,7 +50,11 @@ const Login = () => {
                 .then((userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
-                    console.log(user)
+                    // user.displayName = fullName.current.value;
+                    // user.photoURL = 'https://avatars.githubusercontent.com/u/181729549?v=4';
+                    const {email, displayName, photoURL} = user;
+                    dispatch(addUser({email: email, displayName: displayName, photoURL: 'https://avatars.githubusercontent.com/u/181729549?v=4'}));
+                    navigate('/browse')
                     // ...
                 })
                 .catch((error) => {
@@ -52,6 +67,32 @@ const Login = () => {
 
     }
 
+    // useEffect(() => {
+
+    //     // signOut(auth).then(() => {
+    //     //     // dispatch(removeUser());
+    //     //     // Sign-out successful.
+    //     // }).catch((error) => {
+    //     //     // An error happened.
+    //     //     console.log(error)
+    //     // });
+
+    //     onAuthStateChanged(auth, (user) => {
+    //         console.log(user)
+    //         if (user) {
+    //             // User is signed in, see docs for a list of available properties
+    //             // https://firebase.google.com/docs/reference/js/auth.user
+    //             const { uid, email, displayName } = user;
+    //             dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
+    //             // ...
+    //         } else {
+    //             dispatch(removeUser());
+    //             // User is signed out
+    //             // ...
+    //         }
+    //     });
+    // }, [])
+
     return <div>
         <Header />
         <div className='absolute' >
@@ -60,7 +101,7 @@ const Login = () => {
         <form onSubmit={e => e.preventDefault()} className='py-6 w-1/4 absolute bg-black flex flex-col top-40 left-2/5 text-white opacity-80 ' >
             <h1 className='text-white font-bold text-3xl text-center p-2 m-2'  > {signup ? "Sign Up" : "Sign In"} </h1>
 
-            {signup && <input type="text" placeholder='Full Name' className='bg-gray-700 py-2 rounded-sm mx-12 my-3' />}
+            {signup && <input ref={fullName} type="text" placeholder='Full Name' className='bg-gray-700 py-2 rounded-sm mx-12 my-3' />}
 
             <input ref={email} type="text" placeholder='Email Address' className='bg-gray-700 py-2 rounded-sm mx-12 my-3' />
             <input ref={password} type="password" placeholder='Password' className='bg-gray-700 py-2 rounded-sm mx-12 my-3 ' />
