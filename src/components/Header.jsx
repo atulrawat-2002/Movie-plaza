@@ -15,7 +15,6 @@ const Header = () => {
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
-            console.log(user)
             if (user) {
                 const displayName = user.displayName;
                 const email = user.email;
