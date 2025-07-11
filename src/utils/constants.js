@@ -11,3 +11,5 @@ export const API_OPTIONS = {
 };
 
 export const BASE_URL = 'https://api.themoviedb.org/3/authentication';
+
+export const IMG_CDN = 'https://image.tmdb.org/t/p/w200/';
