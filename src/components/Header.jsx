@@ -7,11 +7,13 @@ import { onAuthStateChanged } from "firebase/auth";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useEffect } from "react";
 import { LOGO, USER_AVATAR } from "../utils/constants";
+import { toggleGptSearch } from "../utils/GptSearchSlice";
 
 
 const Header = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const showGpt = useSelector(store => store?.gptSearch?.showGptSearch);
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
@@ -28,6 +30,10 @@ const Header = () => {
             }
         });
     }, [])
+
+    const handleGptSearch = () => {
+        dispatch(toggleGptSearch());   
+    }
 
     const handleLogOut = () => {
         signOut(auth).then(() => {
@@ -46,8 +52,9 @@ const Header = () => {
             <img className=" w-44 " src={LOGO} alt="logo" />
             {
                 user && <div className=" flex items-center justify-center" >
-                    <img className=" h-12 rounded-lg " src={user.photoURL} alt="userLogo" />
-                    <button onClick={handleLogOut} className=" bg-red-600 p-1 m-1 rounded-sm cursor-pointer font-semibold " > Log Out</button>
+                    <img className=" h-10 rounded-lg " src={user.photoURL} alt="userLogo" />
+                    <button onClick={handleGptSearch} className="bg-purple-900 p-2 m-1 mx-2 rounded-sm cursor-pointer font-semibold" > {showGpt ? "Home" : "GPT Search"} </button>
+                    <button onClick={handleLogOut} className=" bg-red-600 p-2 m-1 rounded-sm cursor-pointer font-semibold " > Log Out</button>
                 </div>
             }
         </div>
