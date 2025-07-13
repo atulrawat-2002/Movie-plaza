@@ -4,6 +4,7 @@ import { addMovieTrailer } from "../utils/movieSlice";
 import { useEffect } from "react";
 
 const useMovieTrailer = (movieId) => {
+
     const movieTrailer = useSelector(store => store.movies.movieTrailer);
      const dispatch = useDispatch();
 
@@ -20,7 +21,6 @@ const useMovieTrailer = (movieId) => {
     }
 
     useEffect(() => {
-        if(movieTrailer) return;
         getMovieVideos()
     }, [])
 }

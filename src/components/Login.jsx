@@ -70,9 +70,9 @@ const Login = () => {
     return <div>
         <Header />
         <div className='absolute' >
-            <img className=' opacity-90 ' src={BG_IMG} alt='image' />
+            <img className='md:h-full h-screen object-cover opacity-90 ' src={BG_IMG} alt='image' />
         </div>
-        <form onSubmit={e => e.preventDefault()} className='py-6 w-1/4 absolute bg-black flex flex-col top-40 left-2/5 text-white opacity-80 ' >
+        <form onSubmit={e => e.preventDefault()} className='py-6 w-full md:w-1/4 absolute bg-black flex flex-col top-40 left-0 md:left-2/5 text-white opacity-80 rounded-xl md:rounded-sm' >
             <h1 className='text-white font-bold text-3xl text-center p-2 m-2'  > {signup ? "Sign Up" : "Sign In"} </h1>
 
             {signup && <input ref={fullName} type="text" placeholder='Full Name' className='bg-gray-700 py-2 rounded-sm mx-12 my-3' />}
