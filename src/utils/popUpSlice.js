@@ -5,6 +5,7 @@ const popUpSlice = createSlice({
     initialState: {
         showPopUp: false,
         popUpMovie: null,
+        showPassword: false,
     },
     reducers: {
         togglePopUp: (state) => {
@@ -12,10 +13,13 @@ const popUpSlice = createSlice({
         },
         addPopUpMovie: (state, action) => {
             state.popUpMovie = action.payload;
+        },
+        toggleShowPassword: (state) => {
+            state.showPassword = !state.showPassword;
         }
     }
 })
 
 
-export const { togglePopUp, addPopUpMovie } = popUpSlice.actions;
+export const { togglePopUp, addPopUpMovie, toggleShowPassword } = popUpSlice.actions;
 export default popUpSlice.reducer;

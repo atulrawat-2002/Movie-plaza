@@ -4,9 +4,10 @@ import Header from './Header';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addUser, removeUser } from '../utils/userSlice';
 import { BG_IMG, USER_AVATAR } from '../utils/constants';
+import { toggleShowPassword } from '../utils/popUpSlice';
 
 const Login = () => {
     const [signup, setSignUp] = useState(false);
@@ -16,6 +17,7 @@ const Login = () => {
     const fullName = useRef(null)
     const navigate = useNavigate()
     const dispatch = useDispatch();
+    const showPassword = useSelector(store => store.popUp.showPassword);
 
 
     const toggleSignUp = () => {
@@ -72,13 +74,15 @@ const Login = () => {
         <div className='absolute' >
             <img className='md:h-full h-screen object-cover opacity-90 ' src={BG_IMG} alt='image' />
         </div>
-        <form onSubmit={e => e.preventDefault()} className='py-6 w-full md:w-1/4 absolute bg-black flex flex-col top-40 left-0 md:left-2/5 text-white opacity-80 rounded-xl md:rounded-sm' >
+        <form onSubmit={e => e.preventDefault()} className='py-6 w-full md:w-1/4 absolute bg-black flex flex-col top-40 left-0 md:left-2/5 text-white opacity-85 rounded-xl md:rounded-sm' >
             <h1 className='text-white font-bold text-3xl text-center p-2 m-2'  > {signup ? "Sign Up" : "Sign In"} </h1>
 
             {signup && <input ref={fullName} type="text" placeholder='Full Name' className='bg-gray-700 py-2 rounded-sm mx-12 my-3' />}
 
             <input ref={email} type="text" placeholder='Email Address' className='bg-gray-700 py-2 rounded-sm mx-12 my-3' />
-            <input ref={password} type="password" placeholder='Password' className='bg-gray-700 py-2 rounded-sm mx-12 my-3 ' />
+            <input ref={password} type={showPassword ? "text" : "password"} placeholder='Password' className='bg-gray-700 py-2 rounded-sm mx-12 my-3 ' />
+
+            <button onClick={() => dispatch(toggleShowPassword())} className='cursor-pointer absolute top-42 md:left-[75%] right-12 p-2 rounded-lg mx-auto bg-conic-270 ' >👁️</button>
 
             <p className=' font-bold, text-red-600 p-2 mx-12 ' > {errorMessage} </p>
 
@@ -90,5 +94,4 @@ const Login = () => {
     </div>
 }
 
-// className='mx-12 cursor-pointer 
 export default Login;
