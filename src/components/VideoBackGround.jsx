@@ -4,7 +4,6 @@ import useMovieTrailer from "../hooks/useMovieTrailer";
 const VideoBackground = ({ movieId }) => {
     useMovieTrailer(movieId);
     const { movieTrailer, autoPlay, mute} = useSelector(store => store?.movies);
-    console.log(autoPlay, mute)
 
     if(!movieTrailer) return;
 

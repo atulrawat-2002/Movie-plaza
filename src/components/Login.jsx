@@ -80,9 +80,13 @@ const Login = () => {
             {signup && <input ref={fullName} type="text" placeholder='Full Name' className='bg-gray-700 py-2 rounded-sm mx-12 my-3' />}
 
             <input ref={email} type="text" placeholder='Email Address' className='bg-gray-700 py-2 rounded-sm mx-12 my-3' />
+
+             
+
             <input ref={password} type={showPassword ? "text" : "password"} placeholder='Password' className='bg-gray-700 py-2 rounded-sm mx-12 my-3 ' />
 
             <button onClick={() => dispatch(toggleShowPassword())} className='cursor-pointer absolute top-42 md:left-[75%] right-12 p-2 rounded-lg mx-auto bg-conic-270 ' >👁️</button>
+          
 
             <p className=' font-bold, text-red-600 p-2 mx-12 ' > {errorMessage} </p>
 
