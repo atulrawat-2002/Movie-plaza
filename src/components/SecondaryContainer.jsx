@@ -6,7 +6,7 @@ const SecondaryContainer = () => {
     const { nowPlayingMovies, upcomingMovies, topRatedMovies, popularMovies } = data;
 
     return <>
-        <div className=" mt-[100%] md:m-0 px-4 md:px-12 bg-black" >
+        <div className=" mt-[100%] md:mt-[5%] px-4 md:px-12 bg-black" >
             <div className="  md:-mt-40 relative z-10" >
             <MovieList title={"Now Playing"} movies={nowPlayingMovies} /> 
 

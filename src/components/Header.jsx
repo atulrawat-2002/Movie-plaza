@@ -59,7 +59,7 @@ const Header = () => {
             {
                 user && <div className=" flex items-center justify-center" >
                     <img className=" h-12 md:h-10 rounded-lg " src={user.photoURL} alt="userLogo" />
-                    <button onClick={handleGptSearch} className="bg-purple-900 p-1 py-3 md:p-2 my-1 mx-1 md:mx-2 rounded-sm cursor-pointer font-semibold" > {showGpt ? "Home" : (showPopUp ? "Home" : "GPT Search")} </button>
+                    <button onClick={handleGptSearch} className="bg-purple-900 p-1 py-3 md:p-2 my-1 mx-1 md:mx-2 rounded-sm cursor-pointer font-semibold" style={{backgroundColor: "oklch(0.48 0.27 285.01)"}} > {showGpt ? "Home" : (showPopUp ? "Home" : "GPT Search")} </button>
                     <button onClick={handleLogOut} className=" bg-red-600 p-1 py-3 md:p-2 m-1 rounded-sm cursor-pointer font-semibold " > Log Out</button>
                 </div>
             }
