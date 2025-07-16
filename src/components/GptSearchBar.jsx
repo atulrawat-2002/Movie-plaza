@@ -33,7 +33,7 @@ const GptSearchBar = () => {
     }
 
     const getSearchedMovies = async (movie) => {
-        const data = await fetch(`https://api.themoviedb.org/3/search/movie?query=${movie}&include_adult=false&language=en-US&page=1`, API_OPTIONS);
+        const data = await fetch(`https://api.themoviedb.org/3/search/movie?query=${movie}&include_adult=false&page=1`, API_OPTIONS);
         const json = await data.json();
         return json.results;
     }
@@ -41,7 +41,7 @@ const GptSearchBar = () => {
     return <>
         <div className="  pt-[35%] md:pt-[8%] flex justify-center " >
             <form onSubmit={e => e.preventDefault()} className=" w-full md:w-1/2 bg-black grid grid-cols-12 opacity-95 ">
-                <input ref={searchText} className=" py-2 px-4 m-4 bg-white col-span-9 font-semibold  " type="text" placeholder="What would you like to watch today?" />
+                <input ref={searchText} className=" py-2 px-4 m-4 bg-white col-span-9 font-semibold  " type="text" placeholder="Ex query: movies for developers" />
                 <button onClick={handleGptSearch} className="m-4 py-2 px-2 md:px-4 bg-red-600 text-black font-semibold rounded-sm col-span-3 cursor-pointer" >Search</button>
             </form>
         </div>

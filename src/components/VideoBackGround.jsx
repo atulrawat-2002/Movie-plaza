@@ -3,9 +3,15 @@ import useMovieTrailer from "../hooks/useMovieTrailer";
 
 const VideoBackground = ({ movieId }) => {
     useMovieTrailer(movieId);
-    const { movieTrailer, autoPlay, mute} = useSelector(store => store?.movies);
+    const { movieTrailer, autoPlay, mute } = useSelector(store => store?.movies);
 
-    if(!movieTrailer) return;
+    if (!movieTrailer || movieTrailer === undefined) {
+        return <>
+            <h1 style={{
+                backgroundImage: "linear-gradient(to right, oklch(0.48 0.27 285.01), red)"
+            }} className="  py-16 md:py-[364px] text-2xl font-semibold text-center " >Trailer Not Available! Any suggestion for UI?</h1>
+        </>
+    }
 
     return <>
         <div className=" " >

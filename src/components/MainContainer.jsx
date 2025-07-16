@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import VideoBackground from "./VideoBackGround";
 import VideoTitle from "./VideoTitle";
+import Shimmer from "./Shimmer";
 
 const MainContainer = ({props}) => {
     let movies = null
@@ -9,7 +10,11 @@ const MainContainer = ({props}) => {
     } else{
         movies = props;
     }
-    if (movies === null) return;
+    if (movies === null) {
+        return <div className="bg-black" >
+            <Shimmer />
+        </div>
+    }
     const mainMovie = movies[0] || movies;
     const { original_title, overview, id } = mainMovie;
 
