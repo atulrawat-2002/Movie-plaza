@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useEffect } from "react";
@@ -58,7 +58,7 @@ const Header = () => {
             <img className="w-39 md:w-44 " src={LOGO} alt="logo" />
             {
                 user && <div className=" flex items-center justify-center" >
-                    <img className=" h-12 md:h-10 rounded-lg " src={user.photoURL} alt="userLogo" />
+                    <Link to="https://github.com/atulrawat-2002" ><img className=" h-12 md:h-10 rounded-lg " src={user.photoURL} alt="userLogo" /></Link>
                     <button onClick={handleGptSearch} className=" p-1 py-3 md:p-2 my-1 mx-1 md:mx-2 rounded-sm cursor-pointer font-semibold" style={{backgroundColor: "oklch(0.48 0.27 285.01)"}} > {showGpt ? "Home" : (showPopUp ? "Home" : "GPT Search")} </button>
                     <button onClick={handleLogOut} className=" bg-red-600 p-1 py-3 md:p-2 m-1 rounded-sm cursor-pointer font-semibold " > Log Out</button>
                 </div>
