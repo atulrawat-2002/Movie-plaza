@@ -12,7 +12,7 @@ const GptSearchBar = () => {
   
     
     const getSearchSuggestions = async (e) => {
-        if(e.code === 'Space'){
+        if(e?.target?.value.endsWith(' ')){
             // When the space bar is hit it enables the suggestions to be shown
             setShowSuggestions(true)
         }
@@ -23,7 +23,7 @@ const GptSearchBar = () => {
             return;
         }
         const searchSuggestionsQuery = `I want you to give me suggestions based on this query: "${searchText?.current?.value}" and output should be like if the query is "romantic" response should be only the suggestions and nothing else in the message : "romantice hollywood movie", "romantic hindi movie", "best romantic drama movie", "romantic emotional movie", "feel good romantic movie". All should be related to movie, not songs, not video nothing else and give only 5 suggestions. `;
-        if (e.code === 'Space' && !(newKey in suggestionData) ) {
+        if (e?.target?.value.endsWith(' ') && !(newKey in suggestionData) ) {
             // if the space bar is pressed and there is no suggestions present already for the current term then only API call will be made
             const getSuggestionsData = await groq.chat.completions.create({
                 messages: [
@@ -73,7 +73,7 @@ const GptSearchBar = () => {
     return <>
         <div className="  pt-[35%] md:pt-[8%] flex justify-center " >
             <form onSubmit={e => e.preventDefault()} className=" w-full md:w-1/2 bg-black grid grid-cols-12 opacity-95 ">
-                <input ref={searchText} onFocus={() => {setShowSuggestions(true); }} onBlur={() => setShowSuggestions(false)}  onKeyDown={(e) => {getSearchSuggestions(e)}} className=" py-2 px-4 m-4 bg-white col-span-9 font-semibold  " type="text" placeholder="Ex query: movies for developers" />
+                <input ref={searchText} onFocus={() => {setShowSuggestions(true); }} onBlur={() => setShowSuggestions(false)}  onChange={(e) => {getSearchSuggestions(e)}} className=" py-2 px-4 m-4 bg-white col-span-9 font-semibold  " type="text" placeholder="Ex query: movies for developers" />
                 <button onClick={handleGptSearch} className="m-4 py-2 px-2 md:px-4 bg-red-600 text-black font-semibold rounded-sm col-span-3 cursor-pointer" >Search</button>
             </form>
         </div>
