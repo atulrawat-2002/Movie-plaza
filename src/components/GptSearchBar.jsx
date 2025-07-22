@@ -22,7 +22,7 @@ const GptSearchBar = () => {
             setShowSuggestions(false)  
             return;
         }
-        const searchSuggestionsQuery = `I want you to give me suggestions based on this query: "${searchText?.current?.value}" and output should be like if the query is "romantic" response should be only the suggestions and nothing else in the message : "romantice hollywood movie", "romantic hindi movie", "best romantic drama movie", "romantic emotional movie", "feel good romantic movie". All should be related to movie, not songs, not video nothing else and give only 5 suggestions. `;
+        const searchSuggestionsQuery = `I want you to give me suggestions based on this query: "${searchText?.current?.value}" and output should be like if the query is "romantic" response should be only the suggestions and nothing else in the message : "romantice hollywood movie", "romantic hindi movie", "best romantic drama movie", "romantic emotional movie", "feel good romantic movie". All should be related to movie, not songs, not video nothing else and give only 10 suggestions. `;
         if (e?.target?.value.endsWith(' ') && !(newKey in suggestionData) ) {
             // if the space bar is pressed and there is no suggestions present already for the current term then only API call will be made
             const getSuggestionsData = await groq.chat.completions.create({
